@@ -1,33 +1,34 @@
 "use strict";
 
 function generateColumn(title) {
-  return {
+  const column = {
     id: crypto.randomUUID(),
     type: "columns",
     element: "div",
     props: {},
+    children: [],
+  };
+  const children = {
+    element: "div",
+    type: "column-header",
+    title: "",
     children: [
+      { element: "h2", type: "title", title: title, children: [] },
       {
-        element: "div",
-        type: "column-header",
-        title: "",
-        children: [
-          { element: "h2", type: "title", title: title, children: [] },
-          {
-            element: "button",
-            type: "add",
-            title: "Add task",
-            children: [],
-            handleClick() {
-              vDOM[0].children.push(generateTaskTemplate());
-              updateDOM();
-              console.log(vDOM);
-            },
-          },
-        ],
+        element: "button",
+        type: "add",
+        title: "Add task",
+        children: [],
+        handleClick() {
+          column.children.push(generateTaskTemplate());
+          updateDOM();
+          console.log(vDOM);
+        },
       },
     ],
   };
+  column.children.push(children);
+  return column;
 }
 
 function generateTaskTemplate() {
