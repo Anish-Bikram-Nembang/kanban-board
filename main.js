@@ -38,6 +38,9 @@ function convert(node) {
     let content = document.createElement("p");
     content.textContent = node.content;
     element.append(content);
+    element.classList.add("tasks");
+  } else {
+    element.classList.add("columns");
   }
   console.log(node.children);
   if (node.children != undefined) {
