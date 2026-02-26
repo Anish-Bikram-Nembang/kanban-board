@@ -41,8 +41,8 @@ function generateColumn(title) {
         type: "task-title-input",
         props: {},
         children: [],
-        handleInput() {
-          this.inputValue = "";
+        handleInput(e) {
+          this.inputValue = e.target.value;
         },
       },
       {
@@ -51,8 +51,8 @@ function generateColumn(title) {
         type: "task-content-input",
         props: {},
         children: [],
-        handleInput() {
-          this.inputValue = "";
+        handleInput(e) {
+          this.inputValue = e.target.value;
         },
       },
       {
@@ -113,7 +113,8 @@ function convert(node) {
   element.classList.add(node.type);
   element.textContent = node.title;
   element.onclick = node.handleClick;
-  element.onInput = node.handleInput;
+  element.oninput = node.handleInput;
+  element.value = node.inputValue;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
