@@ -2,6 +2,7 @@
 
 function generateColumn(title) {
   return {
+    id: crypto.randomUUID(),
     type: "columns",
     element: "div",
     props: {},
@@ -12,12 +13,55 @@ function generateColumn(title) {
         title: "",
         children: [
           { element: "h2", type: "title", title: title, children: [] },
-          { element: "button", type: "add", title: "Add task", children: [] },
+          {
+            element: "button",
+            type: "add",
+            title: "Add task",
+            children: [],
+            handleClick() {
+              vDOM[0].children.push(generateTaskTemplate());
+              updateDOM();
+              console.log(vDOM);
+            },
+          },
         ],
       },
     ],
   };
 }
+
+function generateTaskTemplate() {
+  return {
+    title: "",
+    element: "div",
+    type: "task-template",
+    props: {},
+    children: [
+      {
+        title: "",
+        element: "input",
+        type: "task-title-input",
+        props: {},
+        children: [],
+      },
+      {
+        title: "",
+        element: "input",
+        type: "task-content-input",
+        props: {},
+        children: [],
+      },
+      {
+        title: "Add",
+        element: "button",
+        type: "task-add-btn",
+        props: {},
+        children: [],
+      },
+    ],
+  };
+}
+
 function generateTask(title = "", content = "") {
   return {
     title: "",
@@ -52,6 +96,7 @@ function convert(node) {
   const element = document.createElement(node.element);
   element.classList.add(node.type);
   element.textContent = node.title;
+  element.onclick = node.handleClick;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
@@ -59,14 +104,13 @@ function convert(node) {
 }
 
 function updateDOM() {
-  if (elements == undefined) {
-    elements = vDOM.map(convert);
-    document.body.append(...elements);
-  } else {
-    prevVDOM = [...vDOM];
-    vDOM = ["to-do", "in-progress", "finished"].map(generateColumn);
-    diff(prevVDOM, vDOM);
-  }
+  // if (elements == undefined) {
+  elements = vDOM.map(convert);
+  document.body.replaceChildren(...elements);
+  // } else {
+  //   prevVDOM = [...vDOM];
+  //   diff(prevVDOM, vDOM);
+  //  }
 }
 
 function diff(previousVOM, currentVDOM) {
