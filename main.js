@@ -34,6 +34,11 @@ function convert(node) {
       : document.createElement("h4");
   title.textContent = node.title;
   element.append(title);
+  if (node.type === "task") {
+    let content = document.createElement("p");
+    content.textContent = node.content;
+    element.append(content);
+  }
   console.log(node.children);
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
