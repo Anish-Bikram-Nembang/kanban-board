@@ -6,10 +6,19 @@ function generateColumn(title) {
     type: "column",
     element: "div",
     props: {},
-    children: [],
+    children: [
+      {
+        element: "div",
+        type: "column-header",
+        title: "",
+        children: [
+          { element: "h2", type: "title", title: "title" },
+          { element: "button", type: "add", title: "Add task", children: [] },
+        ],
+      },
+    ],
   };
 }
-
 function generateTask(title = "", content = "") {
   return {
     title: title,
@@ -34,13 +43,19 @@ function convert(node) {
       : document.createElement("h4");
   title.textContent = node.title;
   element.append(title);
-  if (node.type === "task") {
-    let content = document.createElement("p");
-    content.textContent = node.content;
-    element.append(content);
-    element.classList.add("tasks");
-  } else {
-    element.classList.add("columns");
+  switch (node.type) {
+    case "task":
+      const content = document.createElement("p");
+      content.textContent = node.content;
+      element.append(content);
+      element.classList.add("tasks");
+      break;
+    case "column":
+      element.classList.add("columns");
+      break;
+    case "add":
+      element.classList.add("btn");
+      break;
   }
   console.log(node.children);
   if (node.children != undefined) {
