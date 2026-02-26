@@ -20,30 +20,30 @@ function generateColumn(title) {
         title: "Add task",
         children: [],
         handleClick() {
-          column.children.push(generateTaskTemplate());
+          column.children.push(column.generateTaskTemplate());
           updateDOM();
-          console.log(vDOM);
         },
       },
     ],
   };
-  column.children.push(children);
-  return column;
-}
-
-function generateTaskTemplate() {
-  return {
-    title: "",
-    element: "div",
-    type: "task-template",
-    props: {},
-    children: [
+  column.generateTaskTemplate = function () {
+    const taskTemplate = {
+      title: "",
+      element: "div",
+      type: "task-template",
+      props: {},
+      children: [],
+    };
+    const taskTemplateChildren = [
       {
         title: "",
         element: "input",
         type: "task-title-input",
         props: {},
         children: [],
+        handleInput() {
+          this.inputValue = "";
+        },
       },
       {
         title: "",
@@ -51,6 +51,9 @@ function generateTaskTemplate() {
         type: "task-content-input",
         props: {},
         children: [],
+        handleInput() {
+          this.inputValue = "";
+        },
       },
       {
         title: "Add",
@@ -59,8 +62,20 @@ function generateTaskTemplate() {
         props: {},
         children: [],
       },
-    ],
+    ];
+    taskTemplate.children.push(...taskTemplateChildren);
+    taskTemplate.children[2].handleClick = function () {
+      const taskTitle = taskTemplate.children[0].inputValue;
+      const taskContent = taskTemplate.children[1].inputValue;
+
+      column.children.push(generateTask(taskTitle, taskContent));
+      updateDOM();
+    };
+    return taskTemplate;
   };
+
+  column.children.push(children);
+  return column;
 }
 
 function generateTask(title = "", content = "") {
@@ -98,6 +113,7 @@ function convert(node) {
   element.classList.add(node.type);
   element.textContent = node.title;
   element.onclick = node.handleClick;
+  element.onInput = node.handleInput;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
@@ -105,13 +121,8 @@ function convert(node) {
 }
 
 function updateDOM() {
-  // if (elements == undefined) {
   elements = vDOM.map(convert);
   document.body.replaceChildren(...elements);
-  // } else {
-  //   prevVDOM = [...vDOM];
-  //   diff(prevVDOM, vDOM);
-  //  }
 }
 
 function diff(previousVOM, currentVDOM) {
