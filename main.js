@@ -2,8 +2,7 @@
 
 function generateColumn(title) {
   return {
-    title: title,
-    type: "column",
+    type: "columns",
     element: "div",
     props: {},
     children: [
@@ -12,7 +11,7 @@ function generateColumn(title) {
         type: "column-header",
         title: "",
         children: [
-          { element: "h2", type: "title", title: "title" },
+          { element: "h2", type: "title", title: title, children: [] },
           { element: "button", type: "add", title: "Add task", children: [] },
         ],
       },
@@ -21,12 +20,26 @@ function generateColumn(title) {
 }
 function generateTask(title = "", content = "") {
   return {
-    title: title,
-    type: "task",
-    content: content,
+    title: "",
     element: "div",
+    type: "task",
     props: {},
-    children: [],
+    children: [
+      {
+        title: title,
+        type: "task-title",
+        element: "h4",
+        props: {},
+        children: [],
+      },
+      {
+        title: content,
+        type: "task-content",
+        element: "p",
+        props: {},
+        children: [],
+      },
+    ],
   };
 }
 
@@ -37,27 +50,8 @@ function addTask(column, title, content) {
 
 function convert(node) {
   const element = document.createElement(node.element);
-  const title =
-    node.type === "column"
-      ? document.createElement("h2")
-      : document.createElement("h4");
-  title.textContent = node.title;
-  element.append(title);
-  switch (node.type) {
-    case "task":
-      const content = document.createElement("p");
-      content.textContent = node.content;
-      element.append(content);
-      element.classList.add("tasks");
-      break;
-    case "column":
-      element.classList.add("columns");
-      break;
-    case "add":
-      element.classList.add("btn");
-      break;
-  }
-  console.log(node.children);
+  element.classList.add(node.type);
+  element.textContent = node.title;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
@@ -79,7 +73,7 @@ function diff(previousVOM, currentVDOM) {
   //diffing function **TODO**
 }
 let elements, vDOM, prevVDOM;
-vDOM = ["to-do", "in-progress", "finished"].map(generateColumn);
+vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 
 addTask(vDOM[0], "Wash Dishes", "need to wash dishes ASAP");
 console.log(vDOM);
