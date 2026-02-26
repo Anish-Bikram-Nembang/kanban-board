@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  gap: 16px;
+  background-color: white;
+  align-items: center;
+}
+.columns {
+  min-width: 200px;
+  border: 2px solid grey;
+  border-radius: 8px;
+  margin: 8px 16px;
+  padding: 8px 16px;
+  height: 90vh;
+  background-color: whitesmoke;
+}
+
+.tasks {
+  background-color: white;
+  border-radius: 8px;
+  border: 2px solid grey;
+  padding: 4px;
+}
