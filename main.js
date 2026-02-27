@@ -75,7 +75,13 @@ function generateColumn(title) {
     };
     return taskTemplate;
   };
-
+  column.handleDrop = function (e) {
+    const title = e.dataTransfer.getData("title");
+    const content = e.dataTransfer.getData("content");
+    const element = generateTask(title, content);
+    this.children.push(element);
+    updateDOM();
+  };
   column.children.push(children);
   return column;
 }
@@ -150,15 +156,7 @@ vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 console.log(vDOM);
 updateDOM();
 
-function dragstartHandler(ev) {
-  // Add different types of drag data
-  ev.dataTransfer.setData("text/plain", ev.target.innerText);
-  ev.dataTransfer.setData("text/html", ev.target.outerHTML);
-  ev.dataTransfer.setData(
-    "text/uri-list",
-    ev.target.ownerDocument.location.href,
-  );
+function handleDragStart(e) {
+  e.dataTransfer.setData("title", e.target.children[0].textContent);
+  e.dataTransfer.setData("content", e.target.children[1].textContent);
 }
-// function handleDragStart(e){
-//   e.dataTransfer.setData("title", e.target.)
-// }
