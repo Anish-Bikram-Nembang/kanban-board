@@ -67,7 +67,7 @@ function generateColumn(title) {
     taskTemplate.children[2].handleClick = function () {
       const taskTitle = taskTemplate.children[0].inputValue;
       const taskContent = taskTemplate.children[1].inputValue;
-
+      column.children.pop();
       column.children.push(generateTask(taskTitle, taskContent));
       updateDOM();
     };
@@ -113,7 +113,11 @@ function convert(node) {
   element.classList.add(node.type);
   element.textContent = node.title;
   element.onclick = node.handleClick;
-  element.oninput = node.handleInput;
+  if (node.handleInput) {
+    element.addEventListener("input", (e) => {
+      node.handleInput.call(node, e);
+    });
+  }
   element.value = node.inputValue;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
