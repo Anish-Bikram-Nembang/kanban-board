@@ -5,7 +5,9 @@ function generateColumn(title) {
     id: crypto.randomUUID(),
     type: "columns",
     element: "div",
-    props: {},
+    props: {
+      draggable: "true",
+    },
     children: [],
   };
   const children = {
@@ -83,7 +85,10 @@ function generateTask(title = "", content = "") {
     title: "",
     element: "div",
     type: "task",
-    props: {},
+    props: {
+      draggable: "true",
+    },
+
     children: [
       {
         title: title,
@@ -107,6 +112,11 @@ function addTask(column, title, content) {
   let task = generateTask(title, content);
   column.children.push(task);
 }
+function addProps(element, props) {
+  for (const key in props) {
+    element.setAttribute(key, props[key]);
+  }
+}
 
 function convert(node) {
   const element = document.createElement(node.element);
@@ -119,6 +129,7 @@ function convert(node) {
     });
   }
   element.value = node.inputValue == undefined ? "" : node.inputValue;
+  addProps(element, node.props);
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
@@ -138,3 +149,16 @@ vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 
 console.log(vDOM);
 updateDOM();
+
+function dragstartHandler(ev) {
+  // Add different types of drag data
+  ev.dataTransfer.setData("text/plain", ev.target.innerText);
+  ev.dataTransfer.setData("text/html", ev.target.outerHTML);
+  ev.dataTransfer.setData(
+    "text/uri-list",
+    ev.target.ownerDocument.location.href,
+  );
+}
+// function handleDragStart(e){
+//   e.dataTransfer.setData("title", e.target.)
+// }
