@@ -136,6 +136,5 @@ function diff(previousVOM, currentVDOM) {
 let elements, vDOM, prevVDOM;
 vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 
-addTask(vDOM[0], "Wash Dishes", "need to wash dishes ASAP");
 console.log(vDOM);
 updateDOM();
