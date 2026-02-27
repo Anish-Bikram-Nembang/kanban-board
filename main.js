@@ -118,7 +118,7 @@ function convert(node) {
       node.handleInput.call(node, e);
     });
   }
-  element.value = node.inputValue;
+  element.value = node.inputValue == undefined ? "" : node.inputValue;
   if (node.children != undefined) {
     element.append(...node.children.map(convert));
   }
