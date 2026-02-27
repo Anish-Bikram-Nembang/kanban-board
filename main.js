@@ -1,5 +1,15 @@
 "use strict";
 
+document.title = "Kanban board";
+document.head.append(
+  (() => {
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.type = "text/css";
+    style.href = "./style.css";
+    return style;
+  })(),
+);
 function generateColumn(title) {
   const column = {
     id: crypto.randomUUID(),
@@ -119,6 +129,9 @@ function addTask(column, title, content) {
   column.children.push(task);
 }
 function addProps(element, props) {
+  // const attributes = props.fiter(isAttribute);
+  // const styles = props.filter(isStyle);
+  // const handlers = props.filter(isHandler);
   for (const key in props) {
     element.setAttribute(key, props[key]);
   }
