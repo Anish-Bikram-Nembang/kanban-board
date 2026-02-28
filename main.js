@@ -1,5 +1,6 @@
 "use strict";
 
+//setting title and linking CSS
 document.title = "Kanban board";
 document.head.append(
   (() => {
@@ -13,6 +14,7 @@ document.head.append(
 function generateColumn(title) {
   const column = {
     id: crypto.randomUUID(),
+    presenceOfTaskTemplate: false,
     type: "columns",
     element: "div",
     props: {
@@ -32,8 +34,11 @@ function generateColumn(title) {
         title: "Add task",
         children: [],
         handleClick() {
-          column.children.push(column.generateTaskTemplate());
-          updateDOM();
+          if (column.presenceOfTaskTemplate === false) {
+            column.children.push(column.generateTaskTemplate());
+            column.presenceOfTaskTemplate = true;
+            updateDOM();
+          }
         },
       },
     ],
@@ -81,6 +86,7 @@ function generateColumn(title) {
       const taskContent = taskTemplate.children[1].inputValue;
       column.children.pop();
       column.children.push(generateTask(taskTitle, taskContent));
+      column.presenceOfTaskTemplate = false;
       updateDOM();
     };
     return taskTemplate;
