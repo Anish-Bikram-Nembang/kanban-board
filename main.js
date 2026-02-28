@@ -17,10 +17,25 @@ function generateColumn(title) {
     presenceOfTaskTemplate: false,
     type: "columns",
     element: "div",
-    props: {
-      draggable: "true",
+    handleDrop: function (e) {
+      e.preventDefault();
+      const title = e.dataTransfer.getData("title");
+      const id = e.dataTransfer.getData("id");
+      const content = e.dataTransfer.getData("content");
+      const element = generateTask(title, content);
+      this.children.push(element);
+      removeTask(id);
+      updateDOM();
+    },
+    handleDragover: function (e) {
+      e.preventDefault();
     },
     children: [],
+  };
+  column.props = {
+    onDrop: column.handleDrop.bind(column),
+    onDragover: column.handleDragover.bind(column),
+    draggable: "true",
   };
   const children = {
     element: "div",
@@ -91,32 +106,27 @@ function generateColumn(title) {
     };
     return taskTemplate;
   };
-  column.handleDrop = function (e) {
-    const title = e.dataTransfer.getData("title");
-    const content = e.dataTransfer.getData("content");
-    const element = generateTask(title, content);
-    this.children.push(element);
-    updateDOM();
-  };
   column.children.push(children);
   return column;
 }
 
 function generateTask(title = "", content = "") {
-  return {
+  const task = {
+    id: crypto.randomUUID(),
     title: "",
     element: "div",
     type: "task",
-    props: {
-      draggable: "true",
+    handleDragStart: function (e) {
+      e.dataTransfer.setData("title", e.target.children[0].textContent);
+      e.dataTransfer.setData("content", e.target.children[1].textContent);
+      e.dataTransfer.setData("id", e.target.id);
+      //updateDOM();
     },
-
     children: [
       {
         title: title,
         type: "task-title",
         element: "h4",
-        props: {},
         children: [],
       },
       {
@@ -128,6 +138,11 @@ function generateTask(title = "", content = "") {
       },
     ],
   };
+  task.props = {
+    onDragstart: task.handleDragStart.bind(task),
+    draggable: "true",
+  };
+  return task;
 }
 
 function addTask(column, title, content) {
@@ -139,7 +154,12 @@ function addProps(element, props) {
   // const styles = props.filter(isStyle);
   // const handlers = props.filter(isHandler);
   for (const key in props) {
-    element.setAttribute(key, props[key]);
+    if (key.startsWith("on") && typeof props[key] === "function") {
+      const event = key.slice(2).toLowerCase();
+      element.addEventListener(event, props[key]);
+    } else {
+      element.setAttribute(key, props[key]);
+    }
   }
 }
 
@@ -148,6 +168,7 @@ function convert(node) {
   element.classList.add(node.type);
   element.textContent = node.title;
   element.onclick = node.handleClick;
+  element.id = node.id;
   if (node.handleInput) {
     element.addEventListener("input", (e) => {
       node.handleInput.call(node, e);
@@ -172,10 +193,10 @@ function diff(previousVOM, currentVDOM) {
 let elements, vDOM, prevVDOM;
 vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 
+function removeTask(id) {
+  for (const column of vDOM) {
+    column.children = column.children.filter((child) => child.id != id);
+  }
+}
 console.log(vDOM);
 updateDOM();
-
-function handleDragStart(e) {
-  e.dataTransfer.setData("title", e.target.children[0].textContent);
-  e.dataTransfer.setData("content", e.target.children[1].textContent);
-}
