@@ -11,6 +11,12 @@ document.head.append(
     return style;
   })(),
 );
+
+const state = {
+  columns: new Map(),
+  tasks: new Map(),
+};
+
 function generateColumn(title) {
   const column = {
     id: crypto.randomUUID(),
@@ -19,12 +25,9 @@ function generateColumn(title) {
     element: "div",
     handleDrop: function (e) {
       e.preventDefault();
-      const title = e.dataTransfer.getData("title");
       const id = e.dataTransfer.getData("id");
-      const content = e.dataTransfer.getData("content");
-      const element = generateTask(title, content);
-      this.children.push(element);
-      removeTask(id);
+      const sourceColumn = e.dataTransfer.getData("sourceColumn");
+      changeTaskColumn(id, sourceColumn, this.id);
       updateDOM();
     },
     handleDragover: function (e) {
@@ -100,25 +103,26 @@ function generateColumn(title) {
       const taskTitle = taskTemplate.children[0].inputValue;
       const taskContent = taskTemplate.children[1].inputValue;
       column.children.pop();
-      column.children.push(generateTask(taskTitle, taskContent));
+      column.children.push(generateTask(taskTitle, taskContent, column.id));
       column.presenceOfTaskTemplate = false;
       updateDOM();
     };
     return taskTemplate;
   };
   column.children.push(children);
+  state.columns.set(column.id, column);
   return column;
 }
 
-function generateTask(title = "", content = "") {
+function generateTask(title = "", content = "", columnID) {
   const task = {
     id: crypto.randomUUID(),
     title: "",
+    columnID: columnID,
     element: "div",
     type: "task",
     handleDragStart: function (e) {
-      e.dataTransfer.setData("title", e.target.children[0].textContent);
-      e.dataTransfer.setData("content", e.target.children[1].textContent);
+      e.dataTransfer.setData("sourceColumn", this.columnID);
       e.dataTransfer.setData("id", e.target.id);
       //updateDOM();
     },
@@ -142,6 +146,7 @@ function generateTask(title = "", content = "") {
     onDragstart: task.handleDragStart.bind(task),
     draggable: "true",
   };
+  state.tasks.set(task.id, task);
   return task;
 }
 
@@ -185,6 +190,7 @@ function convert(node) {
 function updateDOM() {
   elements = vDOM.map(convert);
   document.body.replaceChildren(...elements);
+  console.log(state);
 }
 
 function diff(previousVOM, currentVDOM) {
@@ -193,10 +199,14 @@ function diff(previousVOM, currentVDOM) {
 let elements, vDOM, prevVDOM;
 vDOM = ["To-do", "In-Progress", "Finished"].map(generateColumn);
 
-function removeTask(id) {
-  for (const column of vDOM) {
-    column.children = column.children.filter((child) => child.id != id);
-  }
+function changeTaskColumn(id, sourceColumnID, targetColumnID) {
+  const task = state.tasks.get(id);
+  task.columnID = targetColumnID;
+  const sourceColumn = state.columns.get(sourceColumnID);
+  const targetColumn = state.columns.get(targetColumnID);
+  sourceColumn.children = sourceColumn.children.filter(
+    (child) => child.id !== id,
+  );
+  targetColumn.children.push(task);
 }
-console.log(vDOM);
 updateDOM();
