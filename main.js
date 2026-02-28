@@ -23,11 +23,21 @@ function generateColumn(title) {
     presenceOfTaskTemplate: false,
     type: "columns",
     element: "div",
+    handleDragStart: function (e) {
+      e.dataTransfer.setData("sourceColumn", this.columnID);
+      e.dataTransfer.setData("id", this.id);
+      e.dataTransfer.setData("type", this.type);
+    },
     handleDrop: function (e) {
       e.preventDefault();
       const id = e.dataTransfer.getData("id");
       const sourceColumn = e.dataTransfer.getData("sourceColumn");
-      changeTaskColumn(id, sourceColumn, this.id);
+      const type = e.dataTransfer.getData("type");
+      if (type === "task") {
+        changeTaskColumn(id, sourceColumn, this.id);
+      } else if (type === "columns") {
+        changeColumnPosition(id, this.id);
+      }
       updateDOM();
     },
     handleDragover: function (e) {
@@ -38,6 +48,7 @@ function generateColumn(title) {
   column.props = {
     onDrop: column.handleDrop.bind(column),
     onDragover: column.handleDragover.bind(column),
+    onDragstart: column.handleDragStart.bind(column),
     draggable: "true",
   };
   const children = {
@@ -122,9 +133,10 @@ function generateTask(title = "", content = "", columnID) {
     element: "div",
     type: "task",
     handleDragStart: function (e) {
+      e.stopPropagation();
       e.dataTransfer.setData("sourceColumn", this.columnID);
-      e.dataTransfer.setData("id", e.target.id);
-      //updateDOM();
+      e.dataTransfer.setData("id", this.id);
+      e.dataTransfer.setData("type", this.type);
     },
     children: [
       {
@@ -208,5 +220,13 @@ function changeTaskColumn(id, sourceColumnID, targetColumnID) {
     (child) => child.id !== id,
   );
   targetColumn.children.push(task);
+}
+function changeColumnPosition(id, targetPositionID) {
+  const sourceIndex = vDOM.findIndex((column) => column.id == id);
+  const targetIndex = vDOM.findIndex((column) => column.id == targetPositionID);
+  if (sourceIndex === -1 || targetIndex === -1 || sourceIndex === targetIndex)
+    return;
+  const [movedColumn] = vDOM.splice(sourceIndex, 1);
+  vDOM.splice(targetIndex, 0, movedColumn);
 }
 updateDOM();
