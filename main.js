@@ -167,9 +167,6 @@ function addTask(column, title, content) {
   column.children.push(task);
 }
 function addProps(element, props) {
-  // const attributes = props.fiter(isAttribute);
-  // const styles = props.filter(isStyle);
-  // const handlers = props.filter(isHandler);
   for (const key in props) {
     if (key.startsWith("on") && typeof props[key] === "function") {
       const event = key.slice(2).toLowerCase();
