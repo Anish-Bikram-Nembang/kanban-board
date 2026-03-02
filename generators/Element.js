@@ -41,3 +41,16 @@ class Task extends Element {
     this.content = content;
   }
 }
+
+//todo
+function render(node) {
+  const element = document.createElement("div");
+  element.classList.add(node.type);
+  element.id = node.id;
+  switch (node.type) {
+    case "column":
+      break;
+    case "task":
+      break;
+  }
+}
