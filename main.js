@@ -70,6 +70,26 @@ function generateColumn(title) {
           }
         },
       },
+      {
+        element: "button",
+        type: "remove",
+        title: "",
+        children: [
+          {
+            element: "span",
+            type: "remove",
+            title: "✗",
+            handleClick(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              vDOM = vDOM.filter((a) => a.id != column.id);
+              state.columns.delete(column.id);
+              updateDOM();
+            },
+            children: [],
+          },
+        ],
+      },
     ],
   };
   column.generateTaskTemplate = function () {
@@ -142,8 +162,24 @@ function generateTask(title = "", content = "", columnID) {
       {
         title: title,
         type: "task-title",
-        element: "h4",
-        children: [],
+        element: "div",
+        children: [
+          {
+            element: "button",
+            type: "remove",
+            title: "✗",
+            handleClick(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              const id = vDOM.findIndex((a) => a.id == columnID);
+              const column = vDOM[id];
+              column.children = column.children.filter((a) => a.id != task.id);
+              state.tasks.delete(task.id);
+              updateDOM();
+            },
+            children: [],
+          },
+        ],
       },
       {
         title: content,
@@ -226,4 +262,5 @@ function changeColumnPosition(id, targetPositionID) {
   const [movedColumn] = vDOM.splice(sourceIndex, 1);
   vDOM.splice(targetIndex, 0, movedColumn);
 }
+
 updateDOM();
