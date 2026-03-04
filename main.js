@@ -43,6 +43,29 @@ function generateColumn(title) {
     handleDragover: function (e) {
       e.preventDefault();
     },
+    handleDoubleClick: function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const columnTitle = column.children[0].children[0];
+      const columnTitleValue = columnTitle.title;
+      const input = {
+        element: "input",
+        title: columnTitleValue,
+        type: "rename-input",
+        children: [],
+        props: {
+          onKeydown: (e) => {
+            if (e.code == "Enter") {
+              columnTitle.title = e.target.value;
+              column.children[0].children[0] = columnTitle;
+              updateDOM();
+            }
+          },
+        },
+      };
+      column.children[0].children[0] = input;
+      updateDOM();
+    },
     children: [],
   };
   column.props = {
@@ -56,7 +79,15 @@ function generateColumn(title) {
     type: "column-header",
     title: "",
     children: [
-      { element: "h2", type: "title", title: title, children: [] },
+      {
+        element: "h2",
+        type: "title",
+        title: title,
+        children: [],
+        props: {
+          onDblclick: column.handleDoubleClick.bind(column),
+        },
+      },
       {
         element: "button",
         type: "add",
@@ -163,6 +194,7 @@ function generateTask(title = "", content = "", columnID) {
         title: title,
         type: "task-title",
         element: "div",
+        props: {},
         children: [
           {
             element: "button",
@@ -180,15 +212,67 @@ function generateTask(title = "", content = "", columnID) {
             children: [],
           },
         ],
+        handleDoubleClick: function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const taskContent = task.children[0];
+          const taskContentValue = taskContent.title;
+          const input = {
+            element: "input",
+            title: taskContentValue,
+            type: "rename-input",
+            children: [],
+            props: {
+              onKeydown: (e) => {
+                if (e.code == "Enter") {
+                  taskContent.title = e.target.value;
+                  task.children[0] = taskContent;
+                  updateDOM();
+                }
+              },
+            },
+          };
+          task.children[0] = input;
+          updateDOM();
+        },
       },
       {
         title: content,
         type: "task-content",
         element: "p",
         props: {},
+        handleDoubleClick: function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const taskContent = task.children[1];
+          const taskContentValue = taskContent.title;
+          const input = {
+            element: "input",
+            title: taskContentValue,
+            type: "rename-input",
+            children: [],
+            props: {
+              onKeydown: (e) => {
+                if (e.code == "Enter") {
+                  taskContent.title = e.target.value;
+                  task.children[1] = taskContent;
+                  updateDOM();
+                }
+              },
+            },
+          };
+          task.children[1] = input;
+          updateDOM();
+        },
         children: [],
       },
     ],
+  };
+  task.children[1].props = {
+    onDblclick: task.children[1].handleDoubleClick.bind(task.children[1]),
+  };
+  task.children[0].props = {
+    onDblclick: task.children[0].handleDoubleClick.bind(task.children[0]),
   };
   task.props = {
     onDragstart: task.handleDragStart.bind(task),
@@ -219,6 +303,7 @@ function convert(node) {
   element.textContent = node.title;
   element.onclick = node.handleClick;
   element.id = node.id;
+  element.value = node.value;
   if (node.handleInput) {
     element.addEventListener("input", (e) => {
       node.handleInput.call(node, e);
@@ -235,7 +320,6 @@ function convert(node) {
 function updateDOM() {
   elements = vDOM.map(convert);
   document.body.replaceChildren(...elements);
-  console.log(state);
 }
 
 function diff(previousVOM, currentVDOM) {
