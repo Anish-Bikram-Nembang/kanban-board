@@ -35,11 +35,13 @@ body {
   border: 2px solid grey;
   border-radius: 8px;
   padding: 4px 8px;
+  cursor: pointer;
 }
 
 .column-header {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .task-template {
@@ -66,4 +68,18 @@ body {
   background-color: white;
   padding: 2px 4px;
   border-radius: 8px;
+  cursor: pointer;
+}
+.remove {
+  border: none;
+  background-color: whitesmoke;
+  cursor: pointer;
+}
+
+.task-title > .remove {
+  background-color: white;
+}
+.task-title {
+  display: flex;
+  justify-content: space-between;
 }
