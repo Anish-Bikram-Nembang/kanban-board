@@ -346,5 +346,7 @@ function changeColumnPosition(id, targetPositionID) {
   const [movedColumn] = vDOM.splice(sourceIndex, 1);
   vDOM.splice(targetIndex, 0, movedColumn);
 }
-
 updateDOM();
+let parsedvDOM = JSON.parse(JSON.stringify(vDOM));
+parsedvDOM = parsedvDOM.map((obj) => Object.setPrototypeOf(obj, columnFuncs));
+console.log(parsedvDOM);

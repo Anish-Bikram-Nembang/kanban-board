@@ -2,7 +2,7 @@ import http from "http";
 import fs from "fs";
 import path from "path";
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const filePath = req.url === "/" ? "./index.html" : "." + req.url;
   const fileExtension = path.extname(filePath);
 
@@ -24,5 +24,7 @@ const server = http.createServer((req, res) => {
       res.end(content);
     }
   });
+  const data = await fs.promises.readFile("./main.js");
+  console.log(data.toString());
 });
 server.listen(3000);
