@@ -1,30 +1,23 @@
 import http from "http";
-import fs from "fs";
-import path from "path";
+
+import { getDB, saveDB } from "./src/db.js";
 
 const server = http.createServer(async (req, res) => {
-  const filePath = req.url === "/" ? "./index.html" : "." + req.url;
-  const fileExtension = path.extname(filePath);
+  if (req.url == "/getdata") {
+    res.statusCode = 200;
+    res.setHeader("content-type", "text/javascript");
 
-  let contentType = "text/plain";
-  if (fileExtension === ".html") {
-    contentType = "text/html";
-  } else if (fileExtension === ".css") {
-    contentType = "text/css";
-  } else if (fileExtension === ".js") {
-    contentType = "text/javascript";
+    const data = await getDB();
+    res.end(JSON.stringify(data));
+  } else if (req.url == "/savedata") {
+    let data = "";
+    req.on("data", (chunk) => {
+      data += chunk.toString();
+    });
+    req.on("end", async () => {
+      await saveDB(JSON.parse(data));
+      res.end();
+    });
   }
-
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      res.statusCode = 404;
-      res.end("Not Found");
-    } else {
-      res.setHeader("content-type", contentType);
-      res.end(content);
-    }
-  });
-  const data = await fs.promises.readFile("./main.js");
-  console.log(data.toString());
 });
 server.listen(3000);
