@@ -6,80 +6,80 @@
 body {
   height: 100vh;
   width: 100vw;
-  display: flex;
-  gap: 16px;
-  background-color: white;
-  align-items: center;
 }
-.columns {
-  border: 2px solid grey;
-  border-radius: 8px;
-  margin: 8px 16px;
-  padding: 8px 16px;
-  height: 90vh;
-  background-color: whitesmoke;
+.container {
+  height: 100%;
+  width: 100%;
+  padding: 40px 80px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.column {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  height: 100%;
+  min-width: 200px;
+  border-radius: 16px;
+  background-color: white;
   gap: 8px;
 }
 
+.column-heading {
+  background-color: darkgrey;
+  border-radius: 16px 16px 0 0;
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-title-and-remove-btn,
+.column-title-and-remove-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .task {
-  background-color: white;
+  width: 90%;
+  background-color: darkgrey;
   border-radius: 8px;
-  border: 2px solid grey;
   padding: 4px;
 }
-
-.add {
-  background-color: white;
-  border: 2px solid grey;
+.btn {
+  height: 24px;
+  width: 120px;
   border-radius: 8px;
-  padding: 4px 8px;
-  cursor: pointer;
-}
-
-.column-header {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid grey;
+  padding: 4px 8px;
+  background-color: whitesmoke;
+}
+.input {
+  border-radius: 8px;
+  height: 24px;
+  padding: 2px 4px;
+  width: 100%;
 }
 
-.task-template {
-  align-items: center;
-  background-color: white;
-  border: 2px solid grey;
-  border-radius: 8px;
+.add-column {
+  height: 80px;
+  gap: 8px;
+  width: 200px;
+  padding: 16px;
+  border-radius: 16px;
+  align-self: start;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 4px 8px;
-}
-
-.task-title-input,
-.task-content-input {
-  width: 150px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  margin: 4px 0;
-}
-
-.task-add-btn {
-  border: 2px solid grey;
+  justify-content: center;
+  align-items: center;
   background-color: white;
-  padding: 2px 4px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.remove {
-  border: none;
-  background-color: whitesmoke;
-  cursor: pointer;
-}
-
-.task-title > .remove {
-  background-color: white;
-}
-.task-title {
-  display: flex;
-  justify-content: space-between;
 }
