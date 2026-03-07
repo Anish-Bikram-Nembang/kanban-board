@@ -1,128 +1,39 @@
-[
-  {
-    "id": "ce1c3768-f0be-4b47-b846-ddad05f3ca85",
-    "draggable": true,
-    "presenceOfTaskTemplate": false,
-    "type": "columns",
-    "element": "div",
-    "children": [
+{
+  "root": [
+    "33f9b077-4d10-42ee-a154-05ed8283ebee",
+    "1407c3d6-c446-424e-ae2a-0df541955a84",
+    "a616d2a9-c07d-49ef-b060-1512bb25fa7e"
+  ],
+  "elements": [
+    [
+      "33f9b077-4d10-42ee-a154-05ed8283ebee",
       {
+        "title": "To Do",
+        "id": "33f9b077-4d10-42ee-a154-05ed8283ebee",
+        "type": "column",
         "element": "div",
-        "type": "column-header",
-        "title": "",
-        "children": [
-          {
-            "element": "h2",
-            "type": "title",
-            "title": "To-do",
-            "children": [],
-            "props": {}
-          },
-          {
-            "element": "button",
-            "type": "add",
-            "title": "Add task",
-            "children": []
-          },
-          {
-            "element": "button",
-            "type": "remove",
-            "title": "",
-            "children": [
-              {
-                "element": "span",
-                "type": "remove",
-                "title": "✗",
-                "children": []
-              }
-            ]
-          }
-        ]
+        "children": []
+      }
+    ],
+    [
+      "1407c3d6-c446-424e-ae2a-0df541955a84",
+      {
+        "title": "In Progress",
+        "id": "1407c3d6-c446-424e-ae2a-0df541955a84",
+        "type": "column",
+        "element": "div",
+        "children": []
+      }
+    ],
+    [
+      "a616d2a9-c07d-49ef-b060-1512bb25fa7e",
+      {
+        "title": "Completed",
+        "id": "a616d2a9-c07d-49ef-b060-1512bb25fa7e",
+        "type": "column",
+        "element": "div",
+        "children": []
       }
     ]
-  },
-  {
-    "id": "e0a39bee-fe99-4e78-b6a7-dc6480955c51",
-    "draggable": true,
-    "presenceOfTaskTemplate": false,
-    "type": "columns",
-    "element": "div",
-    "children": [
-      {
-        "element": "div",
-        "type": "column-header",
-        "title": "",
-        "children": [
-          {
-            "element": "h2",
-            "type": "title",
-            "title": "In-Progress",
-            "children": [],
-            "props": {}
-          },
-          {
-            "element": "button",
-            "type": "add",
-            "title": "Add task",
-            "children": []
-          },
-          {
-            "element": "button",
-            "type": "remove",
-            "title": "",
-            "children": [
-              {
-                "element": "span",
-                "type": "remove",
-                "title": "✗",
-                "children": []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "f01ae6cc-58b0-44a6-ad28-a6498df2e8e0",
-    "draggable": true,
-    "presenceOfTaskTemplate": false,
-    "type": "columns",
-    "element": "div",
-    "children": [
-      {
-        "element": "div",
-        "type": "column-header",
-        "title": "",
-        "children": [
-          {
-            "element": "h2",
-            "type": "title",
-            "title": "Finished",
-            "children": [],
-            "props": {}
-          },
-          {
-            "element": "button",
-            "type": "add",
-            "title": "Add task",
-            "children": []
-          },
-          {
-            "element": "button",
-            "type": "remove",
-            "title": "",
-            "children": [
-              {
-                "element": "span",
-                "type": "remove",
-                "title": "✗",
-                "children": []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-]
+  ]
+}
