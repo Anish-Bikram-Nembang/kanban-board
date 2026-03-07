@@ -1,5 +1,5 @@
-import Column from "./Column.js";
-import Task from "./Task.js";
+import Column from "./Factory/Column.js";
+import Task from "./Factory/Task.js";
 
 export default function Board() {
   const board = {
@@ -9,27 +9,28 @@ export default function Board() {
       this.elements.set(id, element);
     },
     load: async function () {
-      const response = await fetch("/root");
+      const response = await fetch("/getdata");
+      const data = await response.json();
       if (!response.ok) {
         alert("Data load failed");
         return;
       }
-      let { root, elements } = await response.json();
-      if (this.root.length <= 0) {
-        this.root = root;
-        this.elements = new Map(elements);
-      } else {
-        //ask User to confirm or save changes ****
-      }
+      const { root, elements } = data;
+      this.root = root;
+      this.elements = new Map(elements);
     },
     save: async function () {
-      const response = await fetch("/save", {
+      const response = await fetch("/savedata", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          root: this.root,
-          elements: Array.from(this.elements.entries()),
-        }),
+        body: JSON.stringify(
+          {
+            root: this.root,
+            elements: Array.from(this.elements.entries()),
+          },
+          null,
+          2,
+        ),
       });
       if (!response.ok) {
         alert("Data save failed");
@@ -50,7 +51,6 @@ export default function Board() {
       this.root.push(column.id);
       return column;
     },
-    createTaskTemplate() {},
     remove(id) {
       const element = this.elements.get(id);
       if (element.type == "column") {
@@ -89,16 +89,30 @@ export default function Board() {
       }
     },
     shiftColumn(to, id) {
-      const element = this.elements.get(id);
       const target = this.elements.get(to);
 
-      this.root = this.root.filter((a) => a != element.id);
+      const sourceIndex = this.root.findIndex((a) => a == id);
+      this.root.splice(sourceIndex, 1);
       const targetIndex =
         target.type == "column"
           ? this.root.findIndex((a) => a == target.id)
           : this.root.findIndex((a) => a == target.parentColumnID);
-      this.root.splice(targetIndex, 0, id);
+      if (targetIndex < sourceIndex) {
+        this.root.splice(targetIndex, 0, id);
+      } else {
+        this.root.splice(targetIndex + 1, 0, id);
+      }
     },
   };
+  board.createColumn("To Do");
+  board.createColumn("In Progress");
+  board.createColumn("Completed");
+
+  (function logState(board) {
+    const state = {
+      root: board.root,
+      elements: Array.from(board.elements.entries()),
+    };
+  })(board);
   return board;
 }

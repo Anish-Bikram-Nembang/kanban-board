@@ -1,4 +1,4 @@
-export function createTask(parentColumnID, title, content) {
+export default function createTask(parentColumnID, title, content) {
   return {
     id: crypto.randomUUID(),
     title,
