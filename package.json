@@ -1,0 +1,23 @@
+{
+  "name": "kanban-board",
+  "version": "1.0.0",
+  "description": "A minimal Kanban board built with vanilla JavaScript. Allows creating tasks, dragging them between columns, and rearranging columns.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node --watch ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anish-Bikram-Nembang/kanban-board.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Anish-Bikram-Nembang/kanban-board/issues"
+  },
+  "homepage": "https://github.com/Anish-Bikram-Nembang/kanban-board#readme"
+}
