@@ -17,10 +17,29 @@ export default function renderColumn(board, column) {
   });
   const addBtn = renderAddTaskBtn();
   addBtn.addEventListener("click", () => {
-    board.createTask(column.id, "hehe", "boiiiiiii");
+    taskTemplate.classList.remove("hidden");
   });
   const titleAndRemoveBtn = document.createElement("div");
   titleAndRemoveBtn.classList.add("column-title-and-remove-btn");
+
+  const taskTemplate = document.createElement("div");
+  taskTemplate.classList.add("task-template", "hidden");
+
+  const inputTitle = document.createElement("input");
+  inputTitle.placeholder = "Title";
+  inputTitle.classList.add("input");
+
+  const inputContent = document.createElement("input");
+  inputContent.placeholder = "Content";
+  inputContent.classList.add("input");
+
+  const btn = document.createElement("button");
+  btn.classList.add("btn");
+  btn.textContent = "Add";
+  btn.addEventListener("click", () => {
+    taskTemplate.classList.add("hidden");
+    board.createTask(column.id, inputTitle.value, inputContent.value);
+  });
 
   element.draggable = true;
   element.addEventListener("dragover", (e) => {
@@ -45,6 +64,11 @@ export default function renderColumn(board, column) {
 
   titleAndRemoveBtn.append(titleElement, removeBtn);
   container.append(titleAndRemoveBtn, addBtn);
-  element.append(container, ...tasks.map(curryOnce(renderTask)(board)));
+  taskTemplate.append(inputTitle, inputContent, btn);
+  element.append(
+    container,
+    taskTemplate,
+    ...tasks.map(curryOnce(renderTask)(board)),
+  );
   return element;
 }
