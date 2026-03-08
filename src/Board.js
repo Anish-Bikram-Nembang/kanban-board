@@ -3,6 +3,8 @@ import Task from "./Factory/Task.js";
 
 export default function Board() {
   const board = {
+    DOM,
+    prevDOM,
     root: [],
     elements: new Map(),
     register(id, element) {

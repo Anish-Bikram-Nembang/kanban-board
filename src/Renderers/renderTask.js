@@ -6,19 +6,22 @@ export default function renderTask(board, task) {
 
   const container = document.createElement("div");
   container.classList.add("task-title-and-remove-btn");
+
   const titleElement = document.createElement("h4");
   titleElement.textContent = task.title;
+  // titleElement.addEventListener("dblclick", (e) ={
+  //   e.preventDefault();
+  //
+  // })
 
   const removeBtn = renderRemoveBtn();
   removeBtn.addEventListener("click", () => {
     board.remove(task.id);
   });
-  container.append(titleElement, removeBtn);
 
   const content = document.createElement("p");
   content.textContent = task.content;
   content.classList.add("task-content");
-  element.append(container, content);
 
   element.draggable = true;
   element.addEventListener("dragover", (e) => {
@@ -41,5 +44,7 @@ export default function renderTask(board, task) {
     }
   });
 
+  container.append(titleElement, removeBtn);
+  element.append(container, content);
   return element;
 }

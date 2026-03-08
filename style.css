@@ -45,7 +45,8 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.task {
+.task,
+.task-template {
   width: 90%;
   background-color: darkgrey;
   border-radius: 8px;
@@ -67,7 +68,7 @@ body {
   border-radius: 8px;
   height: 24px;
   padding: 2px 4px;
-  width: 100%;
+  width: 150px;
 }
 
 .add-column {
@@ -82,4 +83,15 @@ body {
   justify-content: center;
   align-items: center;
   background-color: white;
+}
+
+.task-template {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
 }
