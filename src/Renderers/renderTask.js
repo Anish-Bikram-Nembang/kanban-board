@@ -10,10 +10,22 @@ export default function renderTask(board, task) {
 
   const titleElement = document.createElement("h4");
   titleElement.textContent = task.title;
-  // titleElement.addEventListener("dblclick", (e) ={
-  //   e.preventDefault();
-  //
-  // })
+  titleElement.addEventListener("dblclick", async () => {
+    const input = document.createElement("input");
+    input.classList.add("rename-input");
+    input.value = titleElement.textContent;
+    container.replaceChild(input, titleElement);
+    input.focus();
+
+    input.addEventListener("keydown", async (e) => {
+      if (e.code == "Enter") {
+        titleElement.textContent = input.value;
+        task.title = input.value;
+        container.replaceChild(titleElement, input);
+        await board.save();
+      }
+    });
+  });
 
   const removeBtn = renderRemoveBtn();
   removeBtn.addEventListener("click", () => {
@@ -23,6 +35,22 @@ export default function renderTask(board, task) {
   const content = document.createElement("p");
   content.textContent = task.content;
   content.classList.add("task-content");
+  content.addEventListener("dblclick", async () => {
+    const input = document.createElement("input");
+    input.classList.add("rename-input");
+    input.value = titleElement.textContent;
+    element.replaceChild(input, content);
+    input.focus();
+
+    input.addEventListener("keydown", async (e) => {
+      if (e.code == "Enter") {
+        content.textContent = input.value;
+        task.content = input.value;
+        element.replaceChild(content, input);
+        await board.save();
+      }
+    });
+  });
 
   element.draggable = true;
   element.addEventListener("dragover", (e) => {

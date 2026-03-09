@@ -9,8 +9,28 @@ export default function renderColumn(board, column) {
 
   const container = document.createElement("div");
   container.classList.add("column-heading");
+
+  const titleAndRemoveBtn = document.createElement("div");
+  titleAndRemoveBtn.classList.add("column-title-and-remove-btn");
+
   const titleElement = document.createElement("h2");
   titleElement.textContent = column.title;
+  titleElement.addEventListener("dblclick", () => {
+    const input = document.createElement("input");
+    input.classList.add("rename-input");
+    input.value = titleElement.textContent;
+    titleAndRemoveBtn.replaceChild(input, titleElement);
+    input.focus();
+
+    input.addEventListener("keydown", async (e) => {
+      if (e.code == "Enter") {
+        titleElement.textContent = input.value;
+        column.title = input.value;
+        titleAndRemoveBtn.replaceChild(titleElement, input);
+        await board.save();
+      }
+    });
+  });
 
   const removeBtn = renderRemoveBtn();
   removeBtn.addEventListener("click", () => {
@@ -23,8 +43,6 @@ export default function renderColumn(board, column) {
       column.presenceOfTaskTemplate = true;
     }
   });
-  const titleAndRemoveBtn = document.createElement("div");
-  titleAndRemoveBtn.classList.add("column-title-and-remove-btn");
 
   const taskTemplate = document.createElement("div");
   taskTemplate.id = crypto.randomUUID();
