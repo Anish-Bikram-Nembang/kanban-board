@@ -38,6 +38,10 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.column-title,
+.task-title {
+  overflow-wrap: anywhere;
+}
 .task-title-and-remove-btn,
 .column-title-and-remove-btn {
   width: 100%;
@@ -51,6 +55,10 @@ body {
   background-color: darkgrey;
   border-radius: 8px;
   padding: 4px;
+}
+.task-content {
+  overflow-wrap: break-word;
+  max-width: 90%;
 }
 .btn {
   height: 24px;
