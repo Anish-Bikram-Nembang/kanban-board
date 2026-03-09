@@ -2,30 +2,16 @@
 
 import Board from "./src/Board.js";
 import Render from "./src/Renderers/Render.js";
+import updateDOM from "./src/updateDOM.js";
+
+const container = document.createElement("div");
+container.classList.add("container");
+document.body.replaceChildren(container);
 
 const board = Board();
-await board.save();
-board.DOM = board.prevDOM = Render(board);
-document.body.replaceChildren(board.DOM);
+await board.load();
+document.body.replaceChildren(Render(board));
 
-function updateDOM(board) {
-  if (isDifferent(board)) {
-    board.prevDOM = board.DOM;
-    board.DOM = Render(board);
-    document.body.replaceChildren(board.DOM);
-  }
-}
-
-function isDifferent(board) {
-  const prevDOM;
-}
-
-setInterval(async () => {
-  await board.save();
-  document.body.replaceChildren(board.DOM);
-}, 500);
-
-//setting title and linking CSS
 document.title = "Kanban board";
 document.head.append(
   (() => {
