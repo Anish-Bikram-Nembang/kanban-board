@@ -4,6 +4,7 @@ import renderTask from "./renderTask.js";
 export default function renderColumn(board, column) {
   const element = document.createElement(column.element);
   element.classList.add("column");
+  element.id = column.id;
   const tasks = column.children.map((id) => board.elements.get(id));
 
   const container = document.createElement("div");
@@ -17,13 +18,19 @@ export default function renderColumn(board, column) {
   });
   const addBtn = renderAddTaskBtn();
   addBtn.addEventListener("click", () => {
-    taskTemplate.classList.remove("hidden");
+    if (!column.presenceOfTaskTemplate) {
+      taskTemplate.classList.remove("hidden");
+      column.presenceOfTaskTemplate = true;
+    }
   });
   const titleAndRemoveBtn = document.createElement("div");
   titleAndRemoveBtn.classList.add("column-title-and-remove-btn");
 
   const taskTemplate = document.createElement("div");
-  taskTemplate.classList.add("task-template", "hidden");
+  taskTemplate.id = crypto.randomUUID();
+  column.presenceOfTaskTemplate
+    ? taskTemplate.classList.add("task-template")
+    : taskTemplate.classList.add("task-template", "hidden");
 
   const inputTitle = document.createElement("input");
   inputTitle.placeholder = "Title";
@@ -36,9 +43,15 @@ export default function renderColumn(board, column) {
   const btn = document.createElement("button");
   btn.classList.add("btn");
   btn.textContent = "Add";
-  btn.addEventListener("click", () => {
-    taskTemplate.classList.add("hidden");
-    board.createTask(column.id, inputTitle.value, inputContent.value);
+  btn.addEventListener("click", async () => {
+    if (column.presenceOfTaskTemplate) {
+      taskTemplate.classList.add("hidden");
+      board.createTask(column.id, inputTitle.value, inputContent.value);
+      inputTitle.value = "";
+      inputContent.value = "";
+      column.presenceOfTaskTemplate = false;
+      await board.save();
+    }
   });
 
   element.draggable = true;
@@ -70,5 +83,6 @@ export default function renderColumn(board, column) {
     taskTemplate,
     ...tasks.map(curryOnce(renderTask)(board)),
   );
+  board.DOM.set(column.id, element);
   return element;
 }

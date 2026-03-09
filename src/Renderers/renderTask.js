@@ -3,6 +3,7 @@ import { renderRemoveBtn } from "../utils.js";
 export default function renderTask(board, task) {
   const element = document.createElement(task.element);
   element.classList.add("task");
+  element.id = task.id;
 
   const container = document.createElement("div");
   container.classList.add("task-title-and-remove-btn");
@@ -46,5 +47,6 @@ export default function renderTask(board, task) {
 
   container.append(titleElement, removeBtn);
   element.append(container, content);
+  board.DOM.set(task.id, element);
   return element;
 }

@@ -4,6 +4,7 @@ export default function createColumn(title) {
     id: crypto.randomUUID(),
     type: "column",
     element: "div",
+    presenceOfTaskTemplate: false,
     children: [],
   };
 }
