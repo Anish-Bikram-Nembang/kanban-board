@@ -1,100 +1,41 @@
 {
   "root": [
-    "78c0ea03-0ccf-4030-9906-c7f6016b6750",
-    "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-    "c11ba27d-40ea-47e0-968c-1502da3c0758"
+    "5b576021-c8a4-4c0d-b627-19503c05a7ca",
+    "f53d099d-3034-43dc-98a6-a629cfe21996",
+    "3995b180-c425-40da-b705-25fd129d19b4"
   ],
   "elements": [
     [
-      "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-      {
-        "title": "To Do",
-        "id": "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-        "type": "column",
-        "element": "div",
-        "children": [
-          "bd2141e7-cdd0-4f03-ab7b-3225468eb3cb",
-          "421f21a5-4c9a-48d3-ad98-43790914ae57",
-          "a88e18a3-971f-4706-926a-d5e5b33b4f2c",
-          "0c0da38b-ecb2-406c-b4a2-9c8c47c1b697"
-        ]
-      }
-    ],
-    [
-      "78c0ea03-0ccf-4030-9906-c7f6016b6750",
+      "f53d099d-3034-43dc-98a6-a629cfe21996",
       {
         "title": "In Progress",
-        "id": "78c0ea03-0ccf-4030-9906-c7f6016b6750",
+        "id": "f53d099d-3034-43dc-98a6-a629cfe21996",
         "type": "column",
         "element": "div",
+        "presenceOfTaskTemplate": false,
         "children": []
       }
     ],
     [
-      "c11ba27d-40ea-47e0-968c-1502da3c0758",
+      "5b576021-c8a4-4c0d-b627-19503c05a7ca",
       {
-        "title": "Completed",
-        "id": "c11ba27d-40ea-47e0-968c-1502da3c0758",
+        "title": "To do",
+        "id": "5b576021-c8a4-4c0d-b627-19503c05a7ca",
         "type": "column",
         "element": "div",
-        "children": [
-          "6570a2e5-b7f5-49ec-abee-6b987a9554d6"
-        ]
+        "presenceOfTaskTemplate": false,
+        "children": []
       }
     ],
     [
-      "bd2141e7-cdd0-4f03-ab7b-3225468eb3cb",
+      "3995b180-c425-40da-b705-25fd129d19b4",
       {
-        "id": "bd2141e7-cdd0-4f03-ab7b-3225468eb3cb",
-        "title": "",
-        "content": "",
-        "type": "task",
-        "parentColumnID": "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-        "element": "div"
-      }
-    ],
-    [
-      "421f21a5-4c9a-48d3-ad98-43790914ae57",
-      {
-        "id": "421f21a5-4c9a-48d3-ad98-43790914ae57",
-        "title": "",
-        "content": "",
-        "type": "task",
-        "parentColumnID": "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-        "element": "div"
-      }
-    ],
-    [
-      "a88e18a3-971f-4706-926a-d5e5b33b4f2c",
-      {
-        "id": "a88e18a3-971f-4706-926a-d5e5b33b4f2c",
-        "title": "",
-        "content": "",
-        "type": "task",
-        "parentColumnID": "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-        "element": "div"
-      }
-    ],
-    [
-      "0c0da38b-ecb2-406c-b4a2-9c8c47c1b697",
-      {
-        "id": "0c0da38b-ecb2-406c-b4a2-9c8c47c1b697",
-        "title": "",
-        "content": "",
-        "type": "task",
-        "parentColumnID": "199d3697-2be5-45e0-ae7c-ad985fae6b1d",
-        "element": "div"
-      }
-    ],
-    [
-      "6570a2e5-b7f5-49ec-abee-6b987a9554d6",
-      {
-        "id": "6570a2e5-b7f5-49ec-abee-6b987a9554d6",
-        "title": "",
-        "content": "",
-        "type": "task",
-        "parentColumnID": "c11ba27d-40ea-47e0-968c-1502da3c0758",
-        "element": "div"
+        "title": "Completed",
+        "id": "3995b180-c425-40da-b705-25fd129d19b4",
+        "type": "column",
+        "element": "div",
+        "presenceOfTaskTemplate": false,
+        "children": []
       }
     ]
   ]
