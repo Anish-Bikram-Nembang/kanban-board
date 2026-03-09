@@ -10,6 +10,7 @@ export default function renderTask(board, task) {
 
   const titleElement = document.createElement("h4");
   titleElement.textContent = task.title;
+  titleElement.classList.add("task-title");
   titleElement.addEventListener("dblclick", async () => {
     const input = document.createElement("input");
     input.classList.add("rename-input");
@@ -38,7 +39,7 @@ export default function renderTask(board, task) {
   content.addEventListener("dblclick", async () => {
     const input = document.createElement("input");
     input.classList.add("rename-input");
-    input.value = titleElement.textContent;
+    input.value = content.textContent;
     element.replaceChild(input, content);
     input.focus();
 

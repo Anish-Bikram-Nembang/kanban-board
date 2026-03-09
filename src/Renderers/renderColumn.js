@@ -14,6 +14,7 @@ export default function renderColumn(board, column) {
   titleAndRemoveBtn.classList.add("column-title-and-remove-btn");
 
   const titleElement = document.createElement("h2");
+  titleElement.classList.add("task-title");
   titleElement.textContent = column.title;
   titleElement.addEventListener("dblclick", () => {
     const input = document.createElement("input");
@@ -58,19 +59,21 @@ export default function renderColumn(board, column) {
   inputContent.placeholder = "Content";
   inputContent.classList.add("input");
 
+  inputTitle.addEventListener("keydown", (e) => {
+    if (e.code == "Enter") {
+      inputContent.focus();
+    }
+  });
+
+  inputContent.addEventListener("keydown", (e) => {
+    if (e.code == "Enter") {
+      createTask();
+    }
+  });
   const btn = document.createElement("button");
   btn.classList.add("btn");
   btn.textContent = "Add";
-  btn.addEventListener("click", async () => {
-    if (column.presenceOfTaskTemplate) {
-      taskTemplate.classList.add("hidden");
-      board.createTask(column.id, inputTitle.value, inputContent.value);
-      inputTitle.value = "";
-      inputContent.value = "";
-      column.presenceOfTaskTemplate = false;
-      await board.save();
-    }
-  });
+  btn.addEventListener("click", createTask);
 
   element.draggable = true;
   element.addEventListener("dragover", (e) => {
@@ -103,4 +106,15 @@ export default function renderColumn(board, column) {
   );
   board.DOM.set(column.id, element);
   return element;
+
+  async function createTask() {
+    if (column.presenceOfTaskTemplate) {
+      taskTemplate.classList.add("hidden");
+      board.createTask(column.id, inputTitle.value, inputContent.value);
+      inputTitle.value = "";
+      inputContent.value = "";
+      column.presenceOfTaskTemplate = false;
+      await board.save();
+    }
+  }
 }

@@ -4,6 +4,12 @@ export default function renderColumnTemplate(board) {
   const container = document.createElement("div");
   container.classList.add("add-column");
   const titleInput = renderInputElement("Column title");
+  titleInput.addEventListener("keydown", (e) => {
+    if (e.code == "Enter") {
+      board.createColumn(titleInput.value);
+      titleInput.value = "";
+    }
+  });
   const addBtn = document.createElement("button");
   addBtn.textContent = "Add Column";
   addBtn.classList.add("btn");
