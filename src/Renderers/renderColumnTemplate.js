@@ -9,6 +9,7 @@ export default function renderColumnTemplate(board) {
   addBtn.classList.add("btn");
   addBtn.addEventListener("click", () => {
     board.createColumn(titleInput.value);
+    titleInput.value = "";
   });
   container.append(titleInput, addBtn);
   return container;
