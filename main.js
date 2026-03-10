@@ -2,7 +2,6 @@
 
 import Board from "./src/Board.js";
 import Render from "./src/Renderers/Render.js";
-import updateDOM from "./src/updateDOM.js";
 
 const container = document.createElement("div");
 container.classList.add("container");
