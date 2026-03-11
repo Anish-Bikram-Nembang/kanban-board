@@ -114,7 +114,6 @@ export default function renderColumn(board, column) {
       inputTitle.value = "";
       inputContent.value = "";
       column.presenceOfTaskTemplate = false;
-      await board.save();
     }
   }
 }
