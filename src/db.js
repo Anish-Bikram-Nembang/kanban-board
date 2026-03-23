@@ -23,6 +23,26 @@ export const getDB = async () => {
   return data;
 };
 
+export const addBoard = async (user_id, name) => {
+  try {
+    const res = await pool.query(
+      `
+      INSERT INTO
+      boards
+      (user_id, name)
+      VALUES
+      ($1, $2)
+      RETURNING
+      *
+      `,
+      [user_id, name],
+    );
+    return res.rows[0];
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
 export const addColumn = async (boardID, name) => {
   try {
     const res = await pool.query(
