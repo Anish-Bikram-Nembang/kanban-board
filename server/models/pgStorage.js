@@ -54,7 +54,7 @@ export const addBoard = async (user_id, name) => {
 
 export const renameBoard = async (id, newName) => {
   try {
-    const res = pool.query(
+    const res = await pool.query(
       `
       UPDATE
       boards
@@ -115,7 +115,7 @@ export const removeColumn = async (id) => {
 };
 export const renameColumn = async (id, newName) => {
   try {
-    const res = pool.query(
+    const res = await pool.query(
       `
       UPDATE
       columns
@@ -175,7 +175,7 @@ export const addTask = async (column_id, name, description = "") => {
 };
 export const renameTask = async (id, newName) => {
   try {
-    const res = pool.query(
+    const res = await pool.query(
       `
       UPDATE
       tasks
