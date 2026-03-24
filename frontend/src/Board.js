@@ -1,6 +1,5 @@
 import Column from "./Factory/Column.js";
 import Task from "./Factory/Task.js";
-import render from "./Renderers/Render.js";
 import renderColumn from "./Renderers/renderColumn.js";
 import renderTask from "./Renderers/renderTask.js";
 
