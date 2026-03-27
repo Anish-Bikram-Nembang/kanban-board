@@ -4,9 +4,9 @@
   "description": "A minimal Kanban board built with vanilla JavaScript. Allows creating tasks, dragging them between columns, and rearranging columns.",
   "main": "main.js",
   "scripts": {
-    "dev": "node --watch ./src/server.js",
+    "dev": "node --watch ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
