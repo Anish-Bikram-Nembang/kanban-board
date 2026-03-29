@@ -1,6 +1,6 @@
 import pool from "../pg.js";
 
-export const removeBoard = async (id) => {
+export const deleteBoard = async (id) => {
   try {
     const res = await pool.query(
       `
@@ -19,7 +19,7 @@ export const removeBoard = async (id) => {
     throw err;
   }
 };
-export const addBoard = async (user_id, name) => {
+export const createBoard = async (user_id, name) => {
   try {
     const res = await pool.query(
       `
