@@ -2,6 +2,7 @@ import Column from "./Factory/Column.js";
 import Task from "./Factory/Task.js";
 import renderColumn from "./Renderers/renderColumn.js";
 import renderTask from "./Renderers/renderTask.js";
+import localStorage from "./defaultBoard.js";
 
 export default function Board() {
   const board = {
@@ -160,5 +161,12 @@ export default function Board() {
       await this.save();
     },
   };
+  //If not logged in
+  if (1) {
+    const dboard = JSON.parse(localStorage.getItem("default"));
+    board.root = dboard.board.root;
+    board.elements = dboard.board.elements;
+  }
+
   return board;
 }
