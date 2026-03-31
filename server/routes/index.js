@@ -1,8 +1,8 @@
-import taskRoutes from "./routes/taskRoutes.js";
-import columnRoutes from "./routes/columnRoutes.js";
-import boardRoutes from "./routes/boardRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./taskRoutes.js";
+import columnRoutes from "./columnRoutes.js";
+import boardRoutes from "./boardRoutes.js";
+import userRoutes from "./userRoutes.js";
+import authRoutes from "./authRoutes.js";
 
 export default function registerRoutes(app) {
   app.use("/api/tasks", taskRoutes);

@@ -4,10 +4,8 @@ const deleteTables = async () => {
   await pool.query(
     `
     DROP TABLE IF EXISTS 
-    tasks CASCADE,
-    columns CASCADE,
-    boards CASCADE,
-    users CASCADE
+    tasks, columns, boards, users 
+    CASCADE
     `,
   );
 };

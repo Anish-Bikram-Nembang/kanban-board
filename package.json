@@ -7,7 +7,7 @@
     "dev": "node --watch ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server/server.js",
-    "schema": "node ./server/database/schema.js"
+    "seed": "node ./server/database/schema.js; node ./server/database/seed.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
     "pg": "^8.20.0"
   }
 }
