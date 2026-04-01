@@ -1,11 +1,6 @@
 import pool from "./pg.js";
+import config from "../config/seedConfig.js";
 const client = await pool.connect();
-const config = {
-  userCount: 10,
-  boardCount: 5,
-  columnCount: 5,
-  taskCount: 8,
-};
 
 const seed = async ({ userCount, boardCount, columnCount, taskCount }) => {
   try {
