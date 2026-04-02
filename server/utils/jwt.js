@@ -1,10 +1,9 @@
-import { SignJWT } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 import { createSecretKey } from "node:crypto";
 import env from "../config/env.js";
 
-const generateToken = (payload) => {
-  const secret = env.JWT_SECRET;
-  const secretKey = createSecretKey(secret, "utf-8");
+export const generateToken = (payload) => {
+  const secretKey = createSecretKey(env.JWT_SECRET, "utf-8");
 
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -12,4 +11,9 @@ const generateToken = (payload) => {
     .setExpirationTime(env.JWT_EXPIRES_IN)
     .sign(secretKey);
 };
-export default generateToken;
+
+export const verifyToken = async (token) => {
+  const secretKey = createSecretKey(env.JWT_SECRET, "utf-8");
+  const { payload } = await jwtVerify(token, secretKey);
+  return payload;
+};

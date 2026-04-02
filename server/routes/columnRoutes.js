@@ -3,13 +3,14 @@ import {
   createColumn,
   getColumns,
   getColumnById,
-  getColumnsByBoard,
   updateColumn,
   deleteColumn,
   getColumnsByBoard,
 } from "../controllers/columnController.js";
+import { authenticateToken } from "../middlewares/auth.js";
 
 const router = express.Router();
+router.use(authenticateToken);
 
 router.post("/", createColumn);
 router.get("/", getColumns);

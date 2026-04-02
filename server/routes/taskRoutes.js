@@ -7,8 +7,10 @@ import {
   deleteTask,
   getTasksByColumn,
 } from "../controllers/taskController.js";
+import { authenticateToken } from "../middlewares/auth.js";
 
 const router = express.Router();
+router.use(authenticateToken);
 
 router.post("/", createTask);
 router.get("/", getTasks);

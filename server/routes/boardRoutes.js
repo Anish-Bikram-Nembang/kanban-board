@@ -6,8 +6,10 @@ import {
   updateBoard,
   deleteBoard,
 } from "../controllers/boardController.js";
+import { authenticateToken } from "../middlewares/auth.js";
 
 const router = express.Router();
+router.use(authenticateToken);
 
 router.post("/", createBoard);
 router.get("/", getBoards);

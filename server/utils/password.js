@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 import env from "../config/env.js";
 
-const hashPassword = async (password) => {
+export const hashPassword = async (password) => {
   return bcrypt.hash(password, env.BCRYPT_ROUNDS);
 };
-
-export default hashPassword;
+export const comparePasswords = async (password, hashedPassword) => {
+  return bcrypt.compare(password, hashedPassword);
+};

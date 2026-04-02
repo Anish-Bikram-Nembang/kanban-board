@@ -41,10 +41,10 @@ export const getBoardById = async ({ user_id, id }) => {
 export const createBoard = async ({ user_id, name }) => {
   const res = await pool.query(
     `
-      INSERT INTO boards b
+      INSERT INTO boards 
       (user_id, name)
       VALUES ($1, $2)
-      RETURNING b.*
+      RETURNING *
       `,
     [user_id, name],
   );
