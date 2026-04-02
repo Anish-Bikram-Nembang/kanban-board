@@ -1,9 +1,8 @@
 import pool from "../pg.js";
 
-export const deleteTask = async (user_id, id) => {
-  try {
-    const res = await pool.query(
-      `
+export const deleteTask = async ({ user_id, id }) => {
+  const res = await pool.query(
+    `
       DELETE FROM tasks t 
       USING columns c, boards b 
       WHERE t.column_id = c.id 
@@ -12,36 +11,40 @@ export const deleteTask = async (user_id, id) => {
       AND b.user_id = $2 
       RETURNING t.*
       `,
-      [id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [id, user_id],
+  );
+  return res.rows[0];
 };
-export const getTasks = async (user_id) => {
-  try {
-    const res = await pool.query(
-      `
+export const getTasks = async ({ user_id }) => {
+  const res = await pool.query(
+    `
       SELECT t.*
       FROM tasks t 
       JOIN columns c ON t.column_id = c.id
       JOIN boards b ON c.board_id = b.id
       WHERE b.user_id = $1
       `,
-      [user_id],
-    );
-    return res.rows;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [user_id],
+  );
+  return res.rows;
 };
-export const getTaskById = async (user_id, id) => {
-  try {
-    const res = await pool.query(
-      `
+export const getTasksByColumn = async ({ user_id, column_id }) => {
+  const res = await pool.query(
+    `
+      SELECT t.*
+      FROM tasks t 
+      JOIN columns c ON t.column_id = c.id
+      JOIN boards b ON c.board_id = b.id
+      WHERE b.user_id = $1
+      AND t.column_id = $2
+      `,
+    [user_id, column_id],
+  );
+  return res.rows;
+};
+export const getTaskById = async ({ user_id, id }) => {
+  const res = await pool.query(
+    `
       SELECT t.*
       FROM tasks t 
       JOIN columns c ON t.column_id = c.id
@@ -50,18 +53,13 @@ export const getTaskById = async (user_id, id) => {
       AND t.id = $1
       
       `,
-      [id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [id, user_id],
+  );
+  return res.rows[0];
 };
-export const shiftTask = async (user_id, id, position) => {
-  try {
-    const res = await pool.query(
-      `
+export const shiftTask = async ({ user_id, id, position }) => {
+  const res = await pool.query(
+    `
       UPDATE tasks t 
       SET position = $1
       FROM columns c 
@@ -71,23 +69,18 @@ export const shiftTask = async (user_id, id, position) => {
       AND b.user_id = $3
       RETURNING t.*
       `,
-      [position, id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [position, id, user_id],
+  );
+  return res.rows[0];
 };
-export const createTask = async (
+export const createTask = async ({
   user_id,
   column_id,
   name,
   description = "",
-) => {
-  try {
-    const res = await pool.query(
-      `
+}) => {
+  const res = await pool.query(
+    `
         INSERT INTO tasks 
         (name, description, column_id, position)
         SELECT $1, $2, $3, COALESCE(MAX(t.position), 0) + 1
@@ -97,20 +90,15 @@ export const createTask = async (
         WHERE c.id = $3
         AND b.user_id = $4
         GROUP BY c.id 
-        RETURNING t.*
+        RETURNING *
         `,
-      [name, description, column_id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [name, description, column_id, user_id],
+  );
+  return res.rows[0];
 };
-export const updateTaskName = async (user_id, id, newName) => {
-  try {
-    const res = await pool.query(
-      `
+export const updateTaskName = async ({ user_id, id, newName }) => {
+  const res = await pool.query(
+    `
       UPDATE tasks t 
       SET name = $1
       FROM columns c 
@@ -121,18 +109,13 @@ export const updateTaskName = async (user_id, id, newName) => {
       AND b.user_id = $3
       RETURNING t.*
       `,
-      [newName, id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [newName, id, user_id],
+  );
+  return res.rows[0];
 };
-export const updateTaskDesc = async (user_id, id, newDesc) => {
-  try {
-    const res = await pool.query(
-      `
+export const updateTaskDesc = async ({ user_id, id, newDesc }) => {
+  const res = await pool.query(
+    `
       UPDATE tasks t 
       SET description = $1
       FROM columns c 
@@ -143,11 +126,7 @@ export const updateTaskDesc = async (user_id, id, newDesc) => {
       AND b.user_id = $3
       RETURNING t.*
       `,
-      [newDesc, id, user_id],
-    );
-    return res.rows[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+    [newDesc, id, user_id],
+  );
+  return res.rows[0];
 };
