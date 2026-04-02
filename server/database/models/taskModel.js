@@ -57,7 +57,7 @@ export const getTaskById = async ({ user_id, id }) => {
   );
   return res.rows[0];
 };
-export const shiftTask = async ({ user_id, id, position }) => {
+export const updateTaskPosition = async ({ user_id, id, position }) => {
   const res = await pool.query(
     `
       UPDATE tasks t 

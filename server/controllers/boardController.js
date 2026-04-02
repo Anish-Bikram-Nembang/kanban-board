@@ -36,7 +36,22 @@ export const getBoardById = async (req, res, next) => {
     next(err);
   }
 };
-export const updateBoard = async (req, res, next) => {};
+export const updateBoard = async (req, res, next) => {
+  try {
+    const updateInfo = {
+      id: req.params.id,
+      user_id: req.user.id,
+      newName: req.body.newName,
+    };
+    let updatedBoard;
+    if (updateInfo.newName) {
+      updatedBoard = await boardModel.updateBoardName(updateInfo);
+    }
+    res.status(200).json(updatedBoard);
+  } catch (err) {
+    next(err);
+  }
+};
 export const deleteBoard = async (req, res, next) => {
   try {
     const deletedBoard = await boardModel.deleteBoard({

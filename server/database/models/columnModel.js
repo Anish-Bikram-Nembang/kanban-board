@@ -56,7 +56,7 @@ export const getColumnById = async ({ user_id, id }) => {
   );
   return res.rows[0];
 };
-export const shiftColumn = async ({ user_id, id, position }) => {
+export const updateColumnPosition = async ({ user_id, id, position }) => {
   const res = await pool.query(
     `
       UPDATE columns c

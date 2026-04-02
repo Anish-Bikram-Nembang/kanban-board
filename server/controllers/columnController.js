@@ -43,7 +43,7 @@ export const getColumnById = async (req, res, next) => {
   try {
     const column = await columnModel.getColumnById({
       user_id: req.user.id,
-      id: req.body.id,
+      id: req.params.id,
     });
     if (!column) {
       return res.status(404).json({ message: "Column not found" });
@@ -53,12 +53,31 @@ export const getColumnById = async (req, res, next) => {
     next(err);
   }
 };
-export const updateColumn = async (req, res, next) => {};
+export const updateColumn = async (req, res) => {
+  try {
+    const updateInfo = {
+      user_id: req.user.id,
+      id: req.params.id,
+      newName: req.body.newName,
+      position: req.body.position,
+    };
+    let updatedColumn;
+    if (updateInfo.newName) {
+      updatedColumn = await columnModel.updateColumnName(updateInfo);
+    }
+    if (updateInfo.position) {
+      updatedColumn = await columnModel.updateColumnPosition(updateInfo);
+    }
+    res.send(200).json(updatedColumn);
+  } catch (err) {
+    next(err);
+  }
+};
 export const deleteColumn = async (req, res, next) => {
   try {
     const deletedColumn = await columnModel.deleteColumn({
       user_id: req.user.id,
-      id: req.body.id,
+      id: req.params.id,
     });
     if (!deletedColumn) {
       return res.status(404).json({ message: "Couldn't delete column" });

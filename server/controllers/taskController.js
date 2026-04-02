@@ -42,7 +42,7 @@ export const getTaskById = async (req, res) => {
   try {
     const task = await taskModel.getTaskById({
       user_id: req.user.id,
-      id: req.body.id,
+      id: req.params.id,
     });
 
     if (!task) {
@@ -55,6 +55,24 @@ export const getTaskById = async (req, res) => {
 };
 export const updateTask = async (req, res) => {
   try {
+    const updateInfo = {
+      id: req.params.id,
+      user_id: req.user.id,
+      newName: req.body.newName,
+      newDesc: req.body.newDesc,
+      position: req.body.position,
+    };
+    let updatedTask;
+    if (updateInfo.newName) {
+      updatedTask = await taskModel.updateTaskName(updateInfo);
+    }
+    if (updateInfo.newDesc) {
+      updatedTask = await taskModel.updateTaskDesc(updateInfo);
+    }
+    if (updateInfo.position) {
+      updatedTask = await taskModel.updateTaskPosition(updateInfo);
+    }
+    res.send(200).json(updatedTask);
   } catch (err) {
     next(err);
   }
@@ -63,7 +81,7 @@ export const deleteTask = async (req, res) => {
   try {
     const deletedTask = await taskModel.deleteTask({
       user_id: req.user.id,
-      id: req.body.id,
+      id: req.params.id,
     });
     if (!deletedTask) {
       return res.status(404).json({ message: "Couldn't delete task" });
