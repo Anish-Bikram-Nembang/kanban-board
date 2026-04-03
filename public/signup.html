@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kanban Board</title>
+    <link href="./css/signup.css" rel="stylesheet" />
+    <script src="./src/handleRegister.js" defer type="module"></script>
+  </head>
+  <body class="w-screen h-screen bg-black flex justify-center items-center">
+    <form
+      class="h-[400px] w-[300px] p-4 bg-white rounded-3xl flex flex-col justify-evenly"
+      action="/submit"
+      method="POST"
+      id="register"
+    >
+      <div class="name h-[64px] w-[100%] flex">
+        <div class="first-name w-[50%]">
+          <label for="first_name">First name:</label><br />
+          <input
+            class="w-[90%]"
+            placeholder="first name"
+            type="text"
+            id="first-name"
+            name="first_name"
+            required
+          /><br /><br />
+        </div>
+        <div class="w-[50%]">
+          <label for="last_name">Last name:</label><br />
+          <input
+            class="w-[90%]"
+            type="text"
+            placeholder="last name"
+            id="last-name"
+            name="last_name"
+            required
+          /><br /><br />
+        </div>
+      </div>
+      <label for="username">Username:</label><br />
+      <input
+        type="text"
+        placeholder="Username"
+        id="username"
+        name="username"
+        required
+      /><br /><br />
+
+      <label for="email">Email:</label><br />
+      <input
+        type="email"
+        placeholder="Email"
+        id="email"
+        name="email"
+        required
+      /><br /><br />
+
+      <label for="password">Password:</label><br />
+      <input
+        type="password"
+        placeholder="Password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+
+      <div class="btn-container w-[100%] flex justify-center">
+        <button
+          class="bg-gray-500 text-white py-1 px-2 rounded-xl"
+          type="submit"
+        >
+          Sign up
+        </button>
+      </div>
+      <div class="w-[100%] flex justify-center">
+        <a href="./login.html">Already have an account? Sign in</a>
+      </div>
+    </form>
+  </body>
+</html>

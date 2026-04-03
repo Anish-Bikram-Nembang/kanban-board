@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kanban Board</title>
+    <link href="./css/signup.css" rel="stylesheet" />
+    <script src="./src/handleLogin.js" defer type="module"></script>
+  </head>
+  <body class="w-screen h-screen bg-black flex justify-center items-center">
+    <form
+      class="h-[400px] w-[300px] p-4 bg-white rounded-3xl flex flex-col justify-evenly"
+      action="/submit"
+      method="POST"
+      id="login"
+    >
+      <div>
+        <div>
+          <label for="email">Email:</label><br />
+          <input
+            type="email"
+            placeholder="Email"
+            id="email"
+            name="email"
+            required
+          /><br /><br />
+        </div>
+
+        <div>
+          <label for="password">Password:</label><br />
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            required
+          /><br /><br />
+        </div>
+      </div>
+      <div class="btn-container w-[100%] flex justify-center">
+        <button
+          class="bg-gray-500 text-white py-1 px-2 rounded-xl"
+          type="submit"
+        >
+          Sign in
+        </button>
+      </div>
+      <div class="w-[100%] flex justify-center">
+        <a href="./signup.html">Don't have an account? Sign up</a>
+      </div>
+    </form>
+  </body>
+</html>

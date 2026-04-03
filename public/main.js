@@ -2,7 +2,9 @@
 
 import Board from "./src/Board.js";
 import Render from "./src/Renderers/Render.js";
+import { checkToken } from "./src/utils.js";
 
+checkToken();
 const container = document.createElement("div");
 container.classList.add("container");
 document.body.replaceChildren(container);

@@ -5,6 +5,12 @@ export function curryOnce(fn) {
     };
   };
 }
+export function checkToken() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+}
 export function renderRemoveBtn() {
   const btn = document.createElement("button");
   btn.textContent = "✗";
